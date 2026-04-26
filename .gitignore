@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Competitive programming local files
+*.out
+*.tmp
+
+# macOS
+.DS_Store
+
+# Optional local scratch folder
+scratch/tmp/
