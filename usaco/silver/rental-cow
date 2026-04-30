@@ -29,7 +29,30 @@ for i in range(1,len(cows)):
     rental_income[i] = rental_income[i-1] + rentals[i]
 
 
-milking_income = [0 for i in range(len(cows))]
+milking_income = [0 for _ in range(len(cows) + 1)]
+
+store_idx = 0
+remaining_at_store = stores[0][0] if stores else 0
+
+# assuming cows is sorted ascending, process highest producers first
+for i in range(1, len(cows) + 1):
+    gallons = cows[-i]
+    income = milking_income[i - 1]
+
+    while gallons > 0 and store_idx < len(stores):
+        take = min(gallons, remaining_at_store)
+
+        income += take * stores[store_idx][1]
+        gallons -= take
+        remaining_at_store -= take
+
+        if remaining_at_store == 0:
+            store_idx += 1
+            if store_idx < len(stores):
+                remaining_at_store = stores[store_idx][0]
+
+    milking_income[i] = income
+
 
 
 
