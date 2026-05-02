@@ -1,0 +1,20 @@
+n = int(input())
+high_cards = []
+low_cards = []
+for i in range(n//2):
+    high_cards.append(int(input()))
+
+for i in range(n//2):
+    low_cards.append(int(input()))
+
+all_cards = high_cards + low_cards
+all_cards.sort()
+
+counter = 0
+bessie_cards = []
+for i in range(1,2*n+1):
+    if counter < len(all_cards) and i == all_cards[counter]:
+        counter += 1
+    else:
+        bessie_cards.append(i)
+bessie_cards.sort()
