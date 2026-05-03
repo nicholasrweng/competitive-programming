@@ -1,0 +1,29 @@
+n,k = map(int, input().split())
+
+berries = list(map(int, input().split()))
+
+berries.sort(reverse=True)
+max_berries = 0
+for i in range(berries[0], 0, -1):
+    berries_copy = berries.copy()
+    pointer = 0
+    full_baskets = 0
+    while pointer < n and full_baskets < k:
+        if berries_copy[pointer] >= i:
+            full_baskets += berries_copy[pointer]//i
+            berries_copy[pointer] = berries_copy[pointer]%i
+        else:
+            pointer += 1
+        
+    if full_baskets >= k:
+        max_berries = max(max_berries, full_baskets//2*i)
+        break
+    
+    elif full_baskets > k//2:
+        berries_copy.sort(reverse=True)
+        max_berries = max(max_berries, (full_baskets - k//2) * i + sum(berries_copy[:k//2- full_baskets + k//2]))
+    
+    else:
+        break
+
+print(max_berries)

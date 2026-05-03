@@ -17,4 +17,35 @@ for i in range(1,2*n+1):
         counter += 1
     else:
         bessie_cards.append(i)
+
 bessie_cards.sort()
+bessie_low_cards = bessie_cards[:n//2]
+bessie_high_cards = bessie_cards[n//2:]
+
+bessie_low_cards.sort()
+bessie_high_cards.sort(reverse = True)
+
+high_cards.sort(reverse=True)
+low_cards.sort()
+
+points = 0
+
+lpointer = 0
+rpointer = len(bessie_high_cards)-1
+for i in range(n//2):
+    if high_cards[i] < bessie_high_cards[lpointer]:
+        points += 1
+        lpointer += 1
+    else:
+        rpointer -= 1
+
+lpointer = 0
+rpointer = len(bessie_low_cards)-1
+for i in range(n//2):
+    if low_cards[i] > bessie_low_cards[lpointer]:
+        points += 1
+        lpointer += 1
+    else:
+        rpointer -= 1
+
+print(points)
