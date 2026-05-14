@@ -1,0 +1,23 @@
+n = int(input())
+elsie_cards = []
+for _ in range(n):
+    elsie_cards.append(int(input()))
+
+elsie_cards.sort()
+
+bessie_cards = []
+pointer = 0
+for i in range(1, 2*n+1):
+    if pointer < len(elsie_cards) and i < elsie_cards[pointer]:
+        bessie_cards.append(i)
+    elif pointer < len(elsie_cards) and i == elsie_cards[pointer]:
+        pointer += 1
+    
+    if pointer >= len(elsie_cards):
+        bessie_cards.append(i)
+
+bessie_cards.sort()
+pointer = 0
+wins = 0
+    
+

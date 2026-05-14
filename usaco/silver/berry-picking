@@ -16,7 +16,7 @@ for i in range(berries[0], 0, -1):
             pointer += 1
         
     if full_baskets >= k:
-        max_berries = max(max_berries, full_baskets//2*i)
+        max_berries = max(max_berries, (k//2)*i)
         break
     
     elif full_baskets > k//2:
@@ -24,6 +24,6 @@ for i in range(berries[0], 0, -1):
         max_berries = max(max_berries, (full_baskets - k//2) * i + sum(berries_copy[:k//2- full_baskets + k//2]))
     
     else:
-        break
+        continue
 
 print(max_berries)

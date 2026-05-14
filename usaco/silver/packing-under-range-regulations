@@ -1,0 +1,52 @@
+import heapq
+
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    intervals = []
+    for i in range(n):
+        l,r = map(int, input().split())
+        l-=1
+        r-=1
+        intervals.append((l,r))
+    
+    intervals.sort(key = lambda x: x[0])
+    heap = []
+    cur = 0 # current box number
+    placed = 0 # of balls placed/intervals satisfied
+    pointer = 0 # pointer for intervals
+    fail = False
+    while placed < n:
+        if not heap and pointer < n:
+            cur = intervals[pointer][0]
+            
+        while pointer < n and intervals[pointer][0] <= cur:
+            heapq.heappush(heap, (intervals[pointer][1], intervals[pointer][0]))
+            pointer += 1
+        
+        if heap and cur <= heap[0][0]:
+            heapq.heappop(heap)
+            placed += 1
+            cur += 1
+        
+        elif heap and cur > heap[0][0]:
+            fail = True
+            break
+        
+        
+    
+    if fail:
+        print("No")
+    else:
+        print("Yes")
+
+        
+
+            
+
+
+
+
+
+
+    

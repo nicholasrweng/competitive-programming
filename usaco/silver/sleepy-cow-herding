@@ -1,0 +1,43 @@
+from bisect import bisect_left, bisect_right
+n = int(input())
+cows = []
+for i in range(n):
+    cows.append(int(input()))
+cows.sort()
+
+max_moves = max(cows[-2] - cows[0], cows[-1] - cows[1]) - n + 1
+
+leftpointer = cows[0]
+rightpointer = leftpointer + n - 1
+initial_count = 1
+for i in range(0, n):
+    if cows[i] - cows[0] < n:
+        initial_count += 1
+
+max_count = initial_count
+for i in range(1,n):
+    leftpointer = cows[i]
+    rightpointer = leftpointer + n - 1
+    count = 0
+    count = bisect_right(cows, rightpointer) - bisect_left(cows, leftpointer)
+
+    max_count = max(max_count, count)
+
+
+if cows[n-2] - cows[0] == n - 2 and cows[n-1] - cows[n-2] > 2:
+    min_moves = 2
+elif cows[n-1] - cows[1] == n - 2 and cows[1] - cows[0] > 2:
+    min_moves = 2
+else:
+    min_moves = n - max_count
+
+print(max_moves - min_moves)
+
+
+    
+
+
+
+
+
+

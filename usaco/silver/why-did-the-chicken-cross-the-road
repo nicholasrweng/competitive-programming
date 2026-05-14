@@ -1,0 +1,36 @@
+import heapq
+
+c,n = map(int,input().split())
+chickens = []
+for i in range(c):
+    chickens.append(int(input()))
+
+chickens.sort()
+
+cows = []
+for i in range(n):
+    a,b = map(int, input().split())
+    cows.append((a,b))
+cows.sort(key = lambda x: x[0])
+
+heap = []
+
+c_pointer = 0
+cow_pointer = 0
+pairs = 0
+for i in range(c):
+    while cow_pointer < n and cows[cow_pointer][0] <= chickens[i]:
+        heapq.heappush(heap, cows[cow_pointer][1])
+        cow_pointer += 1
+
+    while heap and heap[0] < chickens[i]:
+        heapq.heappop(heap)
+        
+    if heap and heap[0] >= chickens[i]:
+        heapq.heappop(heap)
+        pairs += 1
+    
+
+
+print(pairs)
+    

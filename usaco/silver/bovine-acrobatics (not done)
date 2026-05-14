@@ -1,0 +1,13 @@
+from collections import deque
+
+n,m,k = map(int, input().split())
+cows = []
+for i in range(n):
+    w,a = map(int, input().split())
+    cows.append([w,a])
+    cows.sort(key = lambda x: x[0])
+
+towers = [[0, k]]
+weight_pointer = 0
+
+while weight_pointer < n:

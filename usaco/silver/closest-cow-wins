@@ -1,0 +1,26 @@
+k,m,n = map(int, input().split())
+patches = []
+
+for i in range(k):
+    p,t = map(int, input().split())
+    patches.append([p,t])
+
+patches.sort(key = lambda x: x[0])
+ncows = []
+
+for i in range(m):
+    ncows.append(int(input()))
+
+ncows.sort()
+
+pointer = 0
+for i in range(k):
+    while pointer < m-1 and abs(ncows[pointer] - patches[i][0]) >= abs(ncows[pointer+1]-patches[i][0]):
+        pointer += 1
+        
+    patches[i].append(abs(ncows[pointer] - patches[i][0]))
+
+    
+    
+
+

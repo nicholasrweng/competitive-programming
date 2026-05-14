@@ -1,13 +1,15 @@
 import heapq
+
 heap = []
-n,g = map(int, input().split())
+n, g = map(int, input().split())
 
 log = []
 
 for i in range(n):
     d, c_id, diff = map(int, input().split())
     log.append((d, c_id, diff))
-    log.sort(key = lambda x: x[0]) 
+
+log.sort(key=lambda x: x[0])
 
 milks = {}
 cows = {}
@@ -15,58 +17,57 @@ cows = {}
 milks[g] = float('inf')
 times_changed = 0
 cur_max = g
+heapq.heappush(heap, -g)
+
 for d, c_id, diff in log:
-    if c_id not in cows:
-        is_one = False
-        cows[c_id] = g+diff
+    old = cows.get(c_id, g)
+    new = old + diff
+    cows[c_id] = new
 
-        new = g+diff
-        if new not in milks_added:
-            milks[new] = 1
-            milks_added.add(new)
-        else:
-            milks[new] += 1
-        
-        if cur_max <= new:
+    milks[old] = milks[old] - 1
+    milks[new] = milks.get(new, 0) + 1
+
+    if old < cur_max:
+        if new == cur_max:
+            times_changed += 1
+
+        elif new > cur_max:
             cur_max = new
             times_changed += 1
-        
-    else:
-        cows[c_id] += diff
-        old = cows[c_id] - diff
-        milks[old] -= 1
-        new = cows[c_id]
-
-        if new not in milks_added:
-            milks[new] = 1
-            milks_added.add(new)
             heapq.heappush(heap, -new)
-            is_one = True
+
         else:
-            milks[new] += 1
+            if milks[new] == 1:
+                heapq.heappush(heap, -new)
 
-        if old == cur_max and milks[old] == 0:
-            while heap and milks[-heap[0]] == 0:
-                heapq.heappop(heap)
-            if heap:
+    elif old == cur_max:
+        if milks[old] == 0:
+            if new > cur_max:
+                cur_max = new
+                heapq.heappush(heap, -new)
+
+            elif new < cur_max:
+                if milks[new] == 1:
+                    heapq.heappush(heap, -new)
+
+                while heap and milks.get(-heap[0], 0) == 0:
+                    heapq.heappop(heap)
+
                 cur_max = -heap[0]
-                if cur_max == new:
-                    if not is_one:
-                        times_changed += 1
-                    else:
-                        pass
-                    
-            else:
-                cur_max = g
-                times_changed += 1
-        
 
-        elif cur_max <= new:
-            cur_max = new
+                if cur_max == new:
+                    if milks.get(new, 0) >= 2:
+                        times_changed += 1
+                else:
+                    times_changed += 1
+
+        elif milks[old] != 0:
             times_changed += 1
-        heapq.heappush(heap, -new)
+
+            if new > cur_max:
+                cur_max = new
+
+            if milks[new] == 1:
+                heapq.heappush(heap, -new)
 
 print(times_changed)
-            
-    
-

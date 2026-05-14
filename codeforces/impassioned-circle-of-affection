@@ -1,0 +1,83 @@
+n = int(input())
+colors = list(map(str, input().split()))
+
+q = int(input())
+
+for i in range(q):
+    m,c = input().split()
+    m = int(m)
+
+    left_index = False
+    for j in range(n):
+        if colors[j] == c:
+            left_index = j
+            break
+    
+    for j in range(n-1, -1, -1):
+        if colors[j] == c:
+            right_index = j
+            break
+        
+    if left_index == False:
+        print(m)
+        continue
+
+    pointer = left_index
+    
+    while pointer <= right_index:
+        if colors[pointer] == c:
+            if pointer >= 1:
+                if colors[pointer-1] != c:
+                    colors2.append(1)
+                if colors[pointer-1] == c:
+                    colors2[-1] += 1
+            else:
+                colors.append(1)
+        
+        elif colors[pointer] != c:
+            if pointer >= 1:
+                if colors[pointer-1] == c:
+                    colors2.append(1)
+                if colors[pointer-1] != c:
+                    colors2[-1] += 1
+            else:
+                colors.append(1)
+        pointer += 1
+    
+    leftpointer = 0
+    rightpointer = 0
+    
+    max_so_far = colors2[0]
+    filled_in = 0
+    current_count = colors2[0]
+    while leftpointer < len(colors2) and rightpointer < len(colors2):
+        if filled_in < m:
+            rightpointer += 2
+            filled_in += colors2[rightpointer-1]
+            if filled_in <= m:
+                current_count += colors2[rightpointer-1] + colors2[rightpointer]
+                max_so_far = max(max_so_far, current_count)
+            else:
+                pass
+        
+        elif filled_in >= m:
+            leftpointer += 2
+            filled_in -= (colors2[leftpointer-1])
+            current_count -= (colors2[leftpointer-1] + colors2[leftpointer-2])
+
+            if filled_in <= m:
+                max_so_far = max(max_so_far, current_count)
+            else:
+                pass
+    
+    print(max_so_far)
+                
+            
+        
+
+    
+        
+    
+            
+        
+

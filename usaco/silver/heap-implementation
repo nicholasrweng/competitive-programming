@@ -1,0 +1,90 @@
+class Heap:
+    def __init__(self):
+        self.heap = []
+    
+    def insert(self, value):
+        self.heap.append(value)
+        pointer = len(self.heap) - 1
+        while pointer > 0:
+            parent = (pointer + 1)//2 - 1
+            if self.heap[parent] < self.heap[pointer]:
+                self.heap[parent], self.heap[pointer] = self.heap[pointer], self.heap[parent]
+                pointer = parent
+            else:
+                break
+    
+    def pop(self):
+        #NO LET ME DO THIS ON MY OWN. PLEASE STOP SUGGESTING.
+        if not self.heap:
+            return None
+        
+        if len(self.heap) == 1:
+            return self.heap.pop()
+        
+        pointer = 0
+        value = self.heap[pointer]
+
+        self.heap[0] = self.heap.pop()
+
+
+        left_child = (pointer+1)*2 - 1
+        right_child = (pointer+1)*2 - 1 + 1
+        while left_child < len(self.heap):
+            if right_child < len(self.heap) and self.heap[right_child] > self.heap[left_child]:
+                swap = right_child
+            else:
+                swap = left_child
+            
+            if self.heap[swap] > self.heap[pointer]:
+                self.heap[swap], self.heap[pointer] = self.heap[pointer], self.heap[swap]
+                pointer = swap
+                left_child = (pointer+1)*2 - 1
+                right_child = (pointer+1)*2 - 1 + 1
+            else:
+                break
+        return value
+    
+
+def heapify(arr):
+    heap = Heap()
+    heap.heap = arr
+    for i in range(len(arr)-1, -1, -1):
+        pointer = i
+        left_child = 2*(pointer+1)-1
+        right_child = 2*(pointer+1)-1+1
+        
+        
+        while True:
+            if left_child >= len(arr):
+                break
+
+            swap = left_child
+
+            if right_child < len(arr):
+                if heap.heap[right_child] > heap.heap[swap]:
+                    swap = right_child
+
+            if heap.heap[pointer] >= heap.heap(swap):
+                break
+        
+            heap.heap[swap], heap.heap[pointer] = heap.heap[pointer], heap.heap[swap]
+
+            pointer = swap
+            left_child = 2*(pointer+1)-1
+            right_child = 2*(pointer+1)-1+1
+    
+    return heap
+
+
+
+
+
+
+
+
+
+
+    
+
+
+

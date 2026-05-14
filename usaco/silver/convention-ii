@@ -1,0 +1,30 @@
+import heapq
+n = int(input())
+
+cows = []
+for s in range(n):
+    a,t = map(int, input().split())
+    cows.append((s,a,t))
+
+cows.sort(key = lambda x: (x[1], x[0]))
+max_time_waited = float('-inf')
+time = cows[0][1]
+heap = []
+
+cowpointer = 0
+while cowpointer < n or heap:
+    while cowpointer < n and cows[cowpointer][1] <= time:
+        heapq.heappush(heap, (cows[cowpointer][0], [cows[cowpointer][2], cows[cowpointer][1]]))
+        cowpointer += 1
+    
+    if heap:
+        start_time, (time_needed, arrival_time) = heap[0]
+        max_time_waited = max(max_time_waited, time - arrival_time)
+        time += time_needed
+        heapq.heappop(heap)
+    else:
+        time = cows[cowpointer][1]
+
+    
+
+
