@@ -1,12 +1,12 @@
 n = int(input())
-colors = list(map(str, input().split()))
+colors = list(input().strip)
 
 q = int(input())
 
 for i in range(q):
     m,c = input().split()
     m = int(m)
-
+    colors2 = []
     left_index = False
     for j in range(n):
         if colors[j] == c:
