@@ -1,0 +1,32 @@
+n,k = list(map(int, input().split()))
+seq = list(map(int, input().split()))
+
+sorted_seq = sorted(seq)
+
+
+def is_possible(arr, k, target): # If it's possible for the median of a subarray of length at least k to be at least target
+    pref = [0]*(len(arr)+1)
+    for i in range(1, len(arr)+1):
+        pref[i] = pref[i-1]+(1 if arr[i-1] >= target else -1)
+    
+    smallest_up_to_a_point = [float('inf')]*(len(arr)+1)
+    for i in range(len(arr)+1):
+        smallest_up_to_a_point[i] = min(smallest_up_to_a_point[i-1], pref[i])
+    
+    for i in range(len(arr), k-1, -1):
+        if pref[i] > smallest_up_to_a_point[i-k]:
+            return True
+
+    return False
+
+lo = 0
+hi = len(sorted_seq)-1
+
+while lo < hi:
+    mid = (lo+hi+1)//2
+    if is_possible(seq,k, sorted_seq[mid]):
+        lo = mid
+    else:
+        hi = mid-1
+
+print(sorted_seq[lo])
