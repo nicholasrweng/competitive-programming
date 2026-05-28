@@ -1,0 +1,42 @@
+n = int(input())
+
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+
+pos = {}
+for i in range(n): # O(n)
+    pos.setdefault(a[i], []).append(i) 
+
+answer = 0
+for i in range(n): # For every doctor position
+    arr = pos.get(b[i], [])
+    
+
+
+
+
+
+
+
+
+
+'''
+    for j in pos.get(b[i], []): # For every cow that matches specifications of doctor
+        if j == i:
+            answer += i*(i+1)//2  + (n-i)*(n-i-1)//2 + 1
+            continue
+        
+        if j < i:
+            r = i
+            l = j
+        
+        elif j > i:
+            r = j
+            l = i
+        answer += min(n-r, l+1)
+
+print(answer)
+
+# Dumb solution.
+
+'''

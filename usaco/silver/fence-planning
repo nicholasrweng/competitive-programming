@@ -1,0 +1,45 @@
+from collections import deque
+
+n,m = list(map(int, input().split()))
+cows = []
+adj = [[] for i in range(n)]
+for i in range(n):
+    x,y = list(map(int, input().split()))
+    cows.append((x,y))
+
+for i in range(m):
+    a,b = list(map(int, input().split()))
+    adj[a-1].append(b-1)
+    adj[b-1].append(a-1)
+
+visited = [False for i in range(n)]
+def bfs(start):
+    global visited
+    visited[start] = True
+    q = deque([start])
+    min_x = cows[start][0]
+    max_x = cows[start][0]
+    min_y = cows[start][1]
+    max_y = cows[start][1]
+    while q:
+        node = q.popleft()
+        x,y = cows[node]
+        min_x = min(min_x, x)
+        max_x = max(max_x, x)
+        min_y = min(min_y, y)
+        max_y = max(max_y, y)
+
+        for v in adj[node]:
+            if not visited[v]:
+                q.append(v)
+                visited[v] = True
+    return (max_x-min_x) + (max_y-min_y)
+
+dims = []
+for i in range(n):
+    if visited[i]:
+        continue
+    else:
+        dims.append(bfs(i))
+
+print(2*max(dims))

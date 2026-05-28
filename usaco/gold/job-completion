@@ -1,0 +1,28 @@
+import heapq
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    jobs = []
+    heap = []
+    cur = 0
+    for i in [0]*n:
+        s, t_i = map(int, input().split())
+        jobs.append((s, t_i))
+
+    jobs.sort(key=lambda x: x[0]+x[1])
+
+    for s,t in jobs:
+        s+t = last_deadline
+
+        cur += t
+        heapq.heappush(heap, -t)
+
+        if cur > last_deadline:
+            z = heapq.heappop(heap)
+            cur += z
+
+    print(len(heap))
+    
+
+    

@@ -14,21 +14,19 @@ for i in range(n):
 def bfs(start, adj):
     visited = [False for i in range(n)]
     queue = deque([start])
+    visited[start] = True
 
     while queue:
         node = queue.popleft()
 
         if not visited[node]:
-            visited[node] = True
             for u in adj[node]:
                 if not visited[u]:
                     queue.append(u)
+                    visited[u] = True
 
-    for cow in visited:
-        if not cow:
-            return False
+    return all(visited)
 
-    return True
 
 
 def trial(x):

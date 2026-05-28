@@ -1,0 +1,23 @@
+
+def bisect_left(a, x, lo=0, hi=None):
+    low = lo
+    hi = hi if hi is not None else len(a)
+
+    while low < hi:
+        mid = (low + hi) // 2
+        if a[mid] < x:
+            low = mid + 1
+        else:
+            hi = mid
+    return hi
+
+def bisect_right(a, x, lo=0, hi=None):
+    low = lo
+    hi= hi if hi is not None else len(a)
+    while low < hi:
+        mid = (low+hi)//2
+        if a[mid] <= x:
+            low = mid + 1
+        else:
+            hi = mid
+    return hi

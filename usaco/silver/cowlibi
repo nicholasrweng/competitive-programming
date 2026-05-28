@@ -1,0 +1,42 @@
+from bisect import bisect_left, bisect_right
+# Cowlibi
+
+G,N = map(int,input().split())
+
+grazings = []
+for i in range(G):
+    x,y,t = map(int, input().split())
+    grazings.append([x,y,t])
+
+grazings.sort(key = lambda x: x[2])
+innocent = 0
+
+
+for i in range(N):
+    ix = True
+    x,y,t = map(int, input().split())
+
+    index = bisect_left(grazings, t, key=lambda x: x[2])
+
+
+    backwards = index > 0
+    forwards = index < len(grazings)
+
+    if forwards:
+        x1,y1,t1 = grazings[index]
+        if t1-t < abs(x1-x)+(y1-y):
+            ix = False
+
+    if backwards:
+        x1,y1,t1 = grazings[index-1]
+        if t-t1 < abs(x1-x)+abs(y1-y):
+            ix = False
+
+    if not ix:
+        innocent += 1
+        
+        
+        
+    
+
+print(innocent)

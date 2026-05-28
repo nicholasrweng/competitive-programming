@@ -1,0 +1,17 @@
+n,q = map(int, input().split())
+cows = []
+for i in range(n):
+    cows.append(int(input()))
+
+prefix = [[0,0,0] for i in range(n+1)]
+for i in range(1, n+1):
+    for j in range(3):
+        prefix[i][j] = prefix[i-1][j]
+    prefix[i][cows[i-1]-1] += 1
+
+for i in range(q):
+    l, r = map(int, input().split())
+    answer = []
+    for j in range(3):
+        answer.append(prefix[r][j] - prefix[l-1][j])
+    print(*answer)

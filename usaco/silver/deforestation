@@ -1,0 +1,17 @@
+t = int(input())
+
+for i in range(t):
+    n,k = list(map(int, input().split()))
+    trees = []
+    for i in range(n):
+        trees.append(int(input()))
+    
+    restrictions = []
+    for i in range(k):
+        restrictions.append(list(map(int, input().split())))
+
+    trees.sort()
+    restrictions.sort(key=lambda x: x[1])
+
+    for restriction in restrictions:
+        
