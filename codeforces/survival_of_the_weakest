@@ -1,0 +1,22 @@
+import heapq
+
+n = int(input())
+arr = list(map(int, input().split()))
+
+arr.sort()
+heap = []
+while len(arr) > 1:
+    new_arr = []
+    for i in range(0, len(arr)-1):
+       heapq.heappush(heap, (arr[i] + arr[i+1],i,i+1))
+    
+    while len(new_arr) < len(arr) - 1:
+        entry = heapq.heappop(heap)
+        new_arr.append(entry[0])
+        if entry[2] + 1 < len(arr):
+            heapq.heappush(heap, (arr[entry[1]] + arr[entry[2]+1], entry[1], entry[2]+1))
+    
+    arr = new_arr
+    heap = []
+
+print(arr[0])

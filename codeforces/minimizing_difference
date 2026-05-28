@@ -1,0 +1,58 @@
+n, k = list(map(int, input().split()))
+seq = list(map(int, input().split()))
+
+seq.sort()
+
+int_dict = {}
+int_list = [seq[0]]
+for i in range(n):
+    int_dict[seq[i]] = int_dict.get(seq[i], 0) + 1
+    if int_list[-1] != seq[i]:
+        int_list.append(seq[i])
+mx = int(seq[-1])
+mn = int(seq[0])
+ops = 0
+
+is_zero = False
+left_pointer = 0
+right_pointer = len(int_list)-1
+while ops < k and left_pointer < right_pointer:
+    if mx == mn:
+        is_zero = True
+        break
+    
+    change_index = mx if int_dict[mx] < int_dict[mn] else mn
+
+    if int_dict[change_index] > k-ops:
+        break
+
+    if change_index == mn:
+        target = int_list[left_pointer+1]
+        if int_dict[change_index]*(int_list[left_pointer+1] - int_list[left_pointer]) >= k-ops:
+            mn += (k-ops)//int_dict[change_index]
+            break
+        
+        ops += int_dict[change_index]*(int_list[left_pointer+1] - int_list[left_pointer])
+        int_dict[target] += int_dict[change_index]
+        left_pointer += 1
+        int_dict[change_index] = 0
+        mn = int_list[left_pointer]
+    
+    elif change_index == mx:
+        target = int_list[right_pointer-1]
+        if int_dict[change_index]*(int_list[right_pointer]-int_list[right_pointer-1]) >= k-ops:
+            mx -= (k-ops)//int_dict[change_index]
+            break
+        ops += int_dict[change_index]*(int_list[right_pointer]-int_list[right_pointer-1])
+        int_dict[target] += int_dict[change_index]
+        right_pointer -= 1
+        int_dict[change_index] = 0
+        mx = int_list[right_pointer]
+
+
+
+if is_zero:
+    print(0)
+
+else:
+    print(mx-mn)

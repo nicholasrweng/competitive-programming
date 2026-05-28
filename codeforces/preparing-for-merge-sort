@@ -1,0 +1,27 @@
+from bisect import bisect_left, bisect_right
+
+n = int(input())
+numbers = list(map(int, input().split()))
+printme = [[numbers[0]]]
+pointer = 1
+
+while pointer < n:
+    num = numbers[pointer]
+    lo = 0
+    hi = len(printme)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if printme[mid][-1] < num:
+            hi = mid
+        elif printme[mid][-1] > num:
+            lo = mid + 1
+        
+    if lo == len(printme):
+        printme.append([num])
+    else:
+        printme[lo].append(num)
+    pointer += 1
+
+for i in range(len(printme)):
+    print(*printme[i])
+

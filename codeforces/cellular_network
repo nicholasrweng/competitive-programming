@@ -1,0 +1,25 @@
+from bisect import bisect_left
+c,t = list(map(int, input().split()))
+
+cities = []
+towers = []
+
+for i in range(c):
+    cities.append(int(input()))
+
+for i in range(t):
+    towers.append(int(input()))
+
+towers.sort()
+max_r_needed = 0
+
+for city in cities:
+    index = bisect_left(towers, city)
+    backwards = index > 0
+    forwards = index < len(towers)
+    if backwards:
+        max_r_needed = max(max_r_needed, city-towers[index-1])
+    if forwards:
+        max_r_needed = max(max_r_needed, towers[index]-city)
+
+print(max_r_needed)
