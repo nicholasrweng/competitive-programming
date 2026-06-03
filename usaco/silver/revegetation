@@ -1,0 +1,57 @@
+from collections import deque
+n,m = list(map(int, input().split()))
+
+conditions = []
+for i in range(m):
+    inp = list(map(int, input().split()))
+    conditions.append((inp[0], int(inp[1]), int(inp[2])))
+
+same_adj = [[] for i in range(n+1)]
+diff_adj = [[] for i in range(n+1)]
+
+for c in conditions:
+    if c[0] == "S":
+        same_adj[c[1]].append(c[2])
+        same_adj[c[2]].append(c[1])
+    else:
+        diff_adj[c[1]].append(c[2])
+        diff_adj[c[2]].append(c[1])
+
+impossible = False
+cows = [None]*(n+1)
+visited = [False]*(n+1)
+connected_components = 0
+for i in range(1, n+1):
+    if visited[i]:
+        continue
+
+    connected_components += 1
+    queue = deque([i])
+    cows[i] = 1
+    visited[i] = True
+
+    while queue:
+        node = queue.popleft()
+
+        for u in same_adj[node]:
+            if not visited[u]:
+                cows[u] = cows[node]
+                visited[u] = True
+                queue.append(u)
+            elif cows[u] != cows[node]:
+                impossible = True
+                break
+        
+        for u in diff_adj[node]:
+            if not visited[u]:
+                cows[u] = 1 - cows[node]
+                visited[u] = True
+                queue.append(u)
+            elif cows[u] == cows[node]:
+                impossible = True
+                break
+
+if impossible:
+    print(0)
+else:
+    print("1" + "0"*(connected_components-1))
