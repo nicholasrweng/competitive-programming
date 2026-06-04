@@ -1,0 +1,33 @@
+n,m = list(map(int, input().split()))
+
+flights = [[] for i in range(n+1)]
+for i in range(m):
+    c,r,d,s = list(map(int, input().split()))
+    flights[c].append((r, d, s))
+
+layovers = list(map(int, input().split()))
+layovers.insert(0,0)
+
+earliest_visited = [float('inf') for i in range(n+1)]
+earliest_visited[1] = 0
+
+stack = [(1,0)]
+time = 0
+while stack:
+    node, time = stack.pop()
+    earliest_visited[node] = time
+
+    for flight in flights[node]:
+        r,d,s = flight
+        if (earliest_visited[d] > s) and (time + layovers[node] <= r): # If this flight improves the earliest time we can get to d, and we can make it to the flight on time
+            earliest_visited[d] = s
+            stack.append((d, s))
+            earliest_visited[d] = s
+
+for time in earliest_visited[1:]:
+    if time == float('inf'):
+        print(-1)
+    else:
+        print(time)
+
+
