@@ -11,8 +11,8 @@ layovers.insert(0,0)
 earliest_visited = [float('inf') for i in range(n+1)]
 earliest_visited[1] = 0
 
-stack = [(1,0)]
-time = 0
+stack = [(1,-float('inf'))]
+time = -float('inf')
 while stack:
     node, time = stack.pop()
     earliest_visited[node] = time
@@ -24,6 +24,7 @@ while stack:
             stack.append((d, s))
             earliest_visited[d] = s
 
+earliest_visited[1] = 0
 for time in earliest_visited[1:]:
     if time == float('inf'):
         print(-1)
