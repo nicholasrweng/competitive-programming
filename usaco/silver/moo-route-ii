@@ -15,7 +15,8 @@ stack = [(1,-float('inf'))]
 time = -float('inf')
 while stack:
     node, time = stack.pop()
-    if earliest_visted[node] > time:earliest_visited[node] = time
+    if earliest_visited[node] > time:
+        earliest_visited[node] = time
 
     for flight in flights[node]:
         r,d,s = flight
